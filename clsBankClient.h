@@ -12,7 +12,7 @@ class clsBankClient : public clsPerson
 {
 private:
 
-	enum enMode { EmptyMode, UpdateMode };
+	enum enMode { EmptyMode, UpdateMode, AddNewMode };
 
 	enMode _mode;
 	string _accountNumber = "";
@@ -106,6 +106,11 @@ private:
 	static clsBankClient _GetEmptyClientObject()
 	{
 		return clsBankClient(enMode::EmptyMode, "", "", "", "", "", "", 0.0);
+	}
+
+	void _AddNewClient()
+	{
+		_AddClientToFile(*this, "Clients.txt");
 	}
 
 	void  _Update()
@@ -229,7 +234,7 @@ public:
 		cout << "\n***************************************\n\n";
 	}
 
-	enum enSaveResultsMode { svFailedEmptyObject, svSucceeded };
+	enum enSaveResultsMode { svFailedEmptyObject, svSucceeded, svFailedAccountExists};
 
 	enSaveResultsMode Save()
 	{
@@ -241,6 +246,21 @@ public:
 		case enMode::UpdateMode:
 			_Update();
 			return enSaveResultsMode::svSucceeded;
+
+		case enMode::AddNewMode:
+			if (!IsClientExists(_accountNumber))
+			{
+				_AddNewClient();
+				_mode = enMode::UpdateMode;
+				return enSaveResultsMode::svSucceeded;
+			}
+			else
+				return enSaveResultsMode::svFailedAccountExists;
 		}
+	}	
+	
+	static clsBankClient GetAddNewClientObject(string accountNumber)
+	{
+		return clsBankClient(enMode::AddNewMode, "", "", "", "", accountNumber, "", 0.0);
 	}
 };
