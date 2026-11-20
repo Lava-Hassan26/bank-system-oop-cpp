@@ -12,7 +12,7 @@ class clsBankClient : public clsPerson
 {
 private:
 
-	enum enMode { EmptyMode = 0, UpdateMode = 1 };
+	enum enMode { EmptyMode, UpdateMode };
 
 	enMode _mode;
 	string _accountNumber = "";
@@ -41,9 +41,86 @@ private:
 		);
 	}
 
+	static string _ConvertClientObjectToDataLine(clsBankClient client, string delim = "#//#")
+	{
+		string line = "";
+		line += client.GetFirstName() + delim;
+		line += client.GetLastName() + delim;
+		line += client.GetEmail() + delim;	
+		line += client.GetPhone() + delim;
+		line += client.GetAccountNumber() + delim;
+		line += client.GetPinCode() + delim;
+		line += to_string(client.GetBalance());
+		return line;
+	}
+
+	static void _AddClientToFile(clsBankClient client, string fileName, string delim = "#//#")
+	{
+		fstream clientsFile;
+		clientsFile.open(fileName, ios::out | ios::app);
+		if (clientsFile.is_open())
+		{
+			string line = _ConvertClientObjectToDataLine(client, delim);
+			clientsFile << line << endl;
+			clientsFile.close();
+		}
+	}
+
+	static void _SaveAllClientsToFile(vector<clsBankClient>& vClients, string fileName, string delim = "#//#")
+	{
+		fstream clientsFile;
+		clientsFile.open(fileName, ios::out);
+
+		if (clientsFile.is_open())
+		{
+			string currentLine = "";
+			for (clsBankClient& client : vClients)
+			{
+				currentLine = _ConvertClientObjectToDataLine(client, delim);
+				clientsFile << currentLine << endl;
+			}
+			clientsFile.close();
+		}
+	}
+
+	static vector<clsBankClient> _LoadAllClientsFromFile(string fileName, string delim = "#//#")
+	{
+		vector<clsBankClient> vClients;
+		fstream clientsFile;
+		clientsFile.open(fileName, ios::in);
+
+		if (clientsFile.is_open())
+		{
+			string currentLine = "";
+			while (getline(clientsFile, currentLine))
+			{
+				clsBankClient client = _ConvertDataLineToClientObject(currentLine, delim);
+				if (!client.IsEmpty())
+					vClients.push_back(client);
+			}
+			clientsFile.close();
+		}
+		return vClients;
+	}
+
 	static clsBankClient _GetEmptyClientObject()
 	{
 		return clsBankClient(enMode::EmptyMode, "", "", "", "", "", "", 0.0);
+	}
+
+	void  _Update()
+	{
+		vector<clsBankClient> _vClients = _LoadAllClientsFromFile("Clients.txt");
+		
+		for (clsBankClient& c : _vClients)
+		{
+			if (c._accountNumber == this->_accountNumber)
+			{
+				c = *this;
+				break;
+			}
+		}
+		_SaveAllClientsToFile(_vClients, "Clients.txt");
 	}
 
 public:
@@ -91,7 +168,7 @@ public:
 	static clsBankClient Find(string accountNumber)
 	{
 		fstream clientsFile;
-		clientsFile.open("Clients.txt", ios::in);//read Mode
+		clientsFile.open("Clients.txt", ios::in);//Read Mode
 		if (clientsFile.is_open())
 		{
 			string Line;
@@ -112,7 +189,7 @@ public:
 	static clsBankClient Find(string accountNumber, string pinCode)
 	{
 		fstream clientsFile;
-		clientsFile.open("Clients.txt", ios::in);//read Mode
+		clientsFile.open("Clients.txt", ios::in);//Read Mode
 		if (clientsFile.is_open())
 		{
 			string Line;
@@ -139,14 +216,31 @@ public:
 
 	void Print()
 	{
-		cout << "\nThe Followings are the Client Details";
+		cout << "\nThe Following are the Client Details";
 		cout << "\n***************************************";
+		cout << "\nFirst Name     : " << GetFirstName();
+		cout << "\nLast Name      : " << GetLastName();	
+		cout << "\nFull Name      : " << GetFullName();
+		cout << "\nEmail          : " << GetEmail();
+		cout << "\nPhone Number   : " << GetPhone();
 		cout << "\nAccount Number : " << GetAccountNumber();
 		cout << "\nPin Code       : " <<GetPinCode();
-		cout << "\nFull Name      : " << GetFullName();
-		cout << "\nPhone Number   : " << GetPhone();
-		cout << "\nEmail          : " << GetEmail();
 		cout << "\nAccount Balance: " << GetBalance();
 		cout << "\n***************************************\n\n";
+	}
+
+	enum enSaveResultsMode { svFailedEmptyObject, svSucceeded };
+
+	enSaveResultsMode Save()
+	{
+		switch (_mode)
+		{
+		case enMode::EmptyMode:
+			return enSaveResultsMode::svFailedEmptyObject;
+
+		case enMode::UpdateMode:
+			_Update();
+			return enSaveResultsMode::svSucceeded;
+		}
 	}
 };

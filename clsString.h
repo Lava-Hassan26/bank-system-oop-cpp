@@ -408,6 +408,22 @@ public:
 		_text = ReplaceWords(_text, currentWord, replacementWord, isMatchCase, delim);
 	}
 
+	static string ReplaceWordInString(string text, string stringToReplace, string replaceTo)
+	{
+		short pos = text.find(stringToReplace);
+
+		while (pos != std::string::npos) {
+			text = text.replace(pos, stringToReplace.length(), replaceTo);
+			pos = text.find(stringToReplace);
+		}
+		return text;
+	}
+
+	string ReplaceWordInString(string stringToReplace, string replaceTo)
+	{
+		return ReplaceWordInString(_text, stringToReplace, replaceTo);
+	}
+
 	static string RemovePunctuations(string text)
 	{
 		string newText = "";

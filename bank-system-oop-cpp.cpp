@@ -1,14 +1,46 @@
 #include <iostream>
 #include "clsBankClient.h"
+#include "clsInputValidation.h"
 using namespace std;
 
-int main()
+void ReadClientInfo(clsBankClient& client)
 {
-    clsBankClient client = clsBankClient::Find("A100");
-    client.Print();
+    client.SetFirstName(clsInputValidation::ReadString("\nEnter first name: "));
+    client.SetLastName(clsInputValidation::ReadString("\nEnter last name: "));
+    client.SetEmail(clsInputValidation::ReadString("\nEnter email: "));
+    client.SetPhone(clsInputValidation::ReadString("\nEnter phone number: "));
+    client.SetPinCode(clsInputValidation::ReadString("\nEnter pin code: "));
+    cout << "\nEnter balance: ";
+    client.SetBalance(clsInputValidation::ReadDoubleNumber());
+}
 
-    clsBankClient client2 = clsBankClient::Find("A101", "1234");
-    client2.Print();
+void Update()
+{
+    string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
+    while (!clsBankClient::IsClientExists(accountNumber))
+    {
+        cout << "\nINVALID! Account number NOT found!\n";
+        accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
+    }
+    clsBankClient client = clsBankClient::Find(accountNumber);
+    client.Print();
+    cout << "\n\nUpdate Client Info:";
+    cout << "\n____________________\n";
+    ReadClientInfo(client);
+    cout << "\n____________________\n";
+
+    clsBankClient::enSaveResultsMode saveResultsMode = client.Save();
+
+    if (saveResultsMode == clsBankClient::enSaveResultsMode::svSucceeded)
+        cout << "\nClient info updated successfully\n";
+
+    if (saveResultsMode == clsBankClient::enSaveResultsMode::svFailedEmptyObject)
+        cout << "\nUpdating client info failed\n";
+}
+
+int main()
+{ 
+    Update();
 
     return 0;
 }
