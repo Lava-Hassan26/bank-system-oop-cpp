@@ -1,4 +1,5 @@
 #include <iostream>
+#include "clsMainScreen.h"
 #include "clsBankClient.h"
 #include "clsInputValidation.h"
 using namespace std;
@@ -168,7 +169,7 @@ void TotalBalancesList()
 
 int main()
 { 
-    TotalBalancesList();
+    clsMainScreen::MainMenuScreen();
   
     return 0;
 }
