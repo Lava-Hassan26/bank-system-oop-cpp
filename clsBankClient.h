@@ -283,4 +283,9 @@ public:
 		}
 		return false;
 	}
+
+	static vector <clsBankClient> GetClientsList()
+	{
+		return _LoadAllClientsFromFile("Clients.txt");
+	}
 };
