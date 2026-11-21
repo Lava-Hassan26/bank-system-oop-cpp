@@ -288,4 +288,15 @@ public:
 	{
 		return _LoadAllClientsFromFile("Clients.txt");
 	}
+
+	static double GetTotalBalances()
+	{
+		vector <clsBankClient> vClients = _LoadAllClientsFromFile("Clients.txt");
+		double totalBalances = 0;
+
+		for (clsBankClient& client : vClients)
+			totalBalances += client._balance;
+
+		return totalBalances;
+	}
 };
