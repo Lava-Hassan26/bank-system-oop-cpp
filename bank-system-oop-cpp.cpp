@@ -19,7 +19,7 @@ void Update()
     string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
     while (!clsBankClient::IsClientExists(accountNumber))
     {
-        cout << "\nINVALID! Account number NOT found!\n";
+        cout << "\nInvalid! Account number already exists.\n";
         accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
     }
     clsBankClient client = clsBankClient::Find(accountNumber);
@@ -76,9 +76,39 @@ void AddNewClient()
     }
 }
 
+void DeleteClient()
+{
+    string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
+    while (!clsBankClient::IsClientExists(accountNumber))
+    {
+        cout << "\nINVALID! Account number NOT found!\n";
+        accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
+    }
+
+    clsBankClient client = clsBankClient::Find(accountNumber);
+    client.Print();
+
+    char answer = 'y';
+    cout << "\nAre you sure you want to delete this client? [Y/N]? ";
+    cin >> answer;
+
+    if (tolower(answer) == 'y')
+    {
+        if (client.Delete())
+        {
+            cout << "\nClient deleted successfully.\n";
+            client.Print();
+        }
+        else
+            cout << "\nError! Account cannot be deleted.\n";
+    }
+    else
+        cout << "\nDeletion cancelled.\n";
+}
+
 int main()
 { 
-    AddNewClient();
+    DeleteClient();
   
     return 0;
 }

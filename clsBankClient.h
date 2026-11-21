@@ -18,6 +18,7 @@ private:
 	string _accountNumber = "";
 	string _pinCode = "";
 	double _balance = 0.0;
+	bool _isMarkedForDelete = false;
 
 	static clsBankClient _ConvertDataLineToClientObject(string dataLine, string delim = "#//#")
 	{
@@ -76,8 +77,11 @@ private:
 			string currentLine = "";
 			for (clsBankClient& client : vClients)
 			{
-				currentLine = _ConvertClientObjectToDataLine(client, delim);
-				clientsFile << currentLine << endl;
+				if (client._isMarkedForDelete == false)
+				{
+					currentLine = _ConvertClientObjectToDataLine(client, delim);
+					clientsFile << currentLine << endl;
+				}
 			}
 			clientsFile.close();
 		}
@@ -127,7 +131,6 @@ private:
 		}
 		_SaveAllClientsToFile(_vClients, "Clients.txt");
 	}
-
 public:
 
 	clsBankClient(enMode mode, string firstName, string lastName,
@@ -262,5 +265,22 @@ public:
 	static clsBankClient GetAddNewClientObject(string accountNumber)
 	{
 		return clsBankClient(enMode::AddNewMode, "", "", "", "", accountNumber, "", 0.0);
+	}
+
+	bool Delete()
+	{
+		vector<clsBankClient> _vClients = _LoadAllClientsFromFile("Clients.txt");
+
+		for (clsBankClient& c : _vClients)
+		{
+			if (c._accountNumber == this->_accountNumber)
+			{
+				c._isMarkedForDelete = true;
+				_SaveAllClientsToFile(_vClients, "Clients.txt");
+				*this = _GetEmptyClientObject();
+				return true;
+			}
+		}
+		return false;
 	}
 };
