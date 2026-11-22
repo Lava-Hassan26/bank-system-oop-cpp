@@ -4,6 +4,7 @@
 #include "clsBankClient.h"
 #include "clsInputValidation.h"
 #include "clsClientsListScreen.h"
+#include "clsAddNewClientScreen.h"
 
 using namespace std;
 
@@ -43,7 +44,7 @@ class clsMainScreen :protected clsScreen
 
     static void _AddNewClientsScreen()
     {
-        cout << "\nAdd New Client Screen Will be Here Soon...\n";
+        clsAddNewClientScreen::ShowAddNewClientScreen();
     }
 
     static void _ShowClientsListScreen()

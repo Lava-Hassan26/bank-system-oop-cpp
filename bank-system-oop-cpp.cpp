@@ -41,44 +41,6 @@ void Update()
         cout << "\nUpdating client info failed\n";
 }
 
-void AddNewClient()
-{
-    string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
-    while (clsBankClient::IsClientExists(accountNumber))
-    {
-        cout << "\nInvalid! Account number already exists.\n";
-        accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
-    }
-
-    clsBankClient newClient = clsBankClient::GetAddNewClientObject(accountNumber);
-    cout << "\n\nAdd New Client:";
-    cout << "\n____________________\n";
-    ReadClientInfo(newClient);
-    cout << "\n____________________\n";
-
-    clsBankClient::enSaveResultsMode saveResultsMode = newClient.Save();
-
-    switch (saveResultsMode)
-    {
-    case  clsBankClient::enSaveResultsMode::svSucceeded:
-    {
-        cout << "\nAccount added successfully.\n";
-        newClient.Print();
-        break;
-    }
-    case clsBankClient::enSaveResultsMode::svFailedEmptyObject:
-    {
-        cout << "\nError! Account cannot be saved because it is empty.\n";
-        break;
-    }
-    case clsBankClient::enSaveResultsMode::svFailedAccountExists:
-    {
-        cout << "\nError! Account cannot be saved because the account number is already used!\n";
-        break;
-    }
-    }
-}
-
 void DeleteClient()
 {
     string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
