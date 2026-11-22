@@ -37,7 +37,7 @@ private:
     }
 
 public:
-    static void ShowAddNewClientScreen()
+    static void AddNewClientScreen()
     {
         _DrawScreenHeader("\tAdd New Client Screen");
         string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
