@@ -5,12 +5,13 @@
 #include "clsInputValidation.h"
 #include "clsClientsListScreen.h"
 #include "clsAddNewClientScreen.h"
+#include "clsDeleteClientScreen.h"
 
 using namespace std;
 
 class clsMainScreen :protected clsScreen
 {
-	enum enMainMenu { ShowClientsList = 1, AddClient, DeleteClient, UpdateClientInfo, FindClient, Transactions, ManageUsers, Logout };
+	enum enMainMenu { ShowClientsList = 1, AddClient, ShowDeleteClientScreen, UpdateClientInfo, FindClient, Transactions, ManageUsers, Logout };
 
     static void _Login()
     {
@@ -39,7 +40,7 @@ class clsMainScreen :protected clsScreen
 
     static void _DeleteClientScreen()
     {
-        cout << "\nDelete Client Screen Will be Here Soon...\n";
+        clsDeleteClientScreen::ShowDeleteClientScreen();
     }
 
     static void _AddNewClientsScreen()
@@ -75,7 +76,7 @@ class clsMainScreen :protected clsScreen
             _GoBackToMainMenu();
             break;
 
-        case enMainMenu::DeleteClient:
+        case enMainMenu::ShowDeleteClientScreen:
             system("cls");
             _DeleteClientScreen();
             _GoBackToMainMenu();
