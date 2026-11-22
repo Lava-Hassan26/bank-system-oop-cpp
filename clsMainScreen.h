@@ -3,6 +3,7 @@
 #include "clsScreen.h"
 #include "clsBankClient.h"
 #include "clsInputValidation.h"
+#include "clsClientsListScreen.h"
 
 using namespace std;
 
@@ -47,7 +48,7 @@ class clsMainScreen :protected clsScreen
 
     static void _ShowClientsListScreen()
     {
-        cout << "\nShow Clients List Screen Will be Here Soon...\n";
+        clsClientsListScreen::ShowClientsList();
     }
 
     static void _GoBackToMainMenu()

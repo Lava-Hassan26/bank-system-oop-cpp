@@ -109,43 +109,6 @@ void DeleteClient()
         cout << "\nDeletion cancelled.\n";
 }
 
-void PrintClientsListHeader()
-{
-    cout << "\n____________________________________________________________________________________________________________________\n\n";
-    cout << "| " << left << setw(16) << "Account Number";
-    cout << "| " << left << setw(25) << "Client Name";
-    cout << "| " << left << setw(15) << "Phone Number";  
-    cout << "| " << left << setw(25) << "Email";  
-    cout << "| " << left << setw(10) << "Pin Code";
-    cout << "| " << left << setw(16) << "Balance";
-    cout << "\n____________________________________________________________________________________________________________________\n\n";
-}
-
-void ShowClientsList()
-{
-    vector<clsBankClient> vClients = clsBankClient::GetClientsList();
-    cout << "\n\n\t\t\t\t\tList Of (" << vClients.size() << ") Clients\n";
-    PrintClientsListHeader();
-
-    if(vClients.empty())
-    {
-        cout << "\n\n\t\t\t\tNo Client Available in the System.\n\n";
-    }
-    else
-    {
-        for (clsBankClient& client : vClients)
-        {
-            cout << "| " << left << setw(16) << client.GetAccountNumber();
-            cout << "| " << left << setw(25) << client.GetFullName();
-            cout << "| " << left << setw(15) << client.GetPhone();
-            cout << "| " << left << setw(25) << client.GetEmail();
-            cout << "| " << left << setw(10) << client.GetPinCode();
-            cout << "| " << left << setw(16) << client.GetBalance() << endl;
-        }
-    }
-    cout << "____________________________________________________________________________________________________________________\n\n";
-}
-
 void TotalBalancesList()
 {
     vector<clsBankClient> vClients = clsBankClient::GetClientsList();
