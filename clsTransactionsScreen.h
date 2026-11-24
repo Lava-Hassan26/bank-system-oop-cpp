@@ -7,6 +7,7 @@
 #include "clsBankClient.h"
 #include "clsDepositScreen.h"
 #include "clsWithdrawScreen.h"
+#include "clsTotalBalancesScreen.h"
 #include "clsInputValidation.h"
 
 class clsTransactionsScreen : protected clsScreen
@@ -31,7 +32,7 @@ private:
 
     static void _TotalBalancesListScreen()
     {
-
+        clsTotalBalancesScreen::TotalBalancesList();
     }
 
     static void _DepositScreen()
