@@ -6,6 +6,7 @@
 #include "clsScreen.h"
 #include "clsBankClient.h"
 #include "clsDepositScreen.h"
+#include "clsWithdrawScreen.h"
 #include "clsInputValidation.h"
 
 class clsTransactionsScreen : protected clsScreen
@@ -40,7 +41,7 @@ private:
 
     static void _WithdrawScreen()
     {
-
+        clsWithdrawScreen::WithdrawScreen();
     }
 
     static void _ExecuteTransactionsMenu(enTransactionsMenu userChoice)

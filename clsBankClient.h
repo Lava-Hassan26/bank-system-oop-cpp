@@ -306,9 +306,15 @@ public:
 		Save();
 	}
 
-	void Withdraw(double amount)
+	bool Withdraw(double amount)
 	{
-		_balance -= amount;
-		Save();
+		if (amount > _balance)
+			return false;
+		else
+		{
+			_balance -= amount;
+			Save();
+			return true;
+		}
 	}
 };
