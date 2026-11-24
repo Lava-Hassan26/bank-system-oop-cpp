@@ -5,7 +5,7 @@
 #include <fstream>
 #include "clsScreen.h"
 #include "clsBankClient.h"
-#include "clsMainScreen.h"
+#include "clsDepositScreen.h"
 #include "clsInputValidation.h"
 
 class clsTransactionsScreen : protected clsScreen
@@ -22,7 +22,7 @@ private:
 
     static void _GoBackToTransactionsMenu()
     {
-        cout << "Press any key to go back to transactions menu . . . ";
+        cout << setw(37) << left << "" << "Press any key to go back to transactions menu . . . ";
         system("pause>0");
         system("cls");
         TransactionsMenuScreen();
@@ -35,7 +35,7 @@ private:
 
     static void _DepositScreen()
     {
-
+        clsDepositScreen::DepositScreen();
     }
 
     static void _WithdrawScreen()
