@@ -8,6 +8,7 @@
 #include "clsDeleteClientScreen.h"
 #include "clsUpdateClientScreen.h"
 #include "clsFindClientScreen.h"
+#include "clsTransactionsScreen.h"
 
 using namespace std;
 
@@ -27,7 +28,7 @@ class clsMainScreen :protected clsScreen
 
     static void _TransactionsMenuScreen()
     {
-        cout << "\nTransactions Menu Screen Will be Here Soon...\n";
+        clsTransactionsScreen::TransactionsMenuScreen();
     }
 
     static void _FindClientScreen()
@@ -99,11 +100,13 @@ class clsMainScreen :protected clsScreen
         case enMainMenu::Transactions:
             system("cls");
             _TransactionsMenuScreen();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenu::ManageUsers:
             system("cls");
             _ManageUsersMenuScreen();
+            _GoBackToMainMenu();
             break;
 
         case enMainMenu::Logout:
