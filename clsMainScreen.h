@@ -9,6 +9,7 @@
 #include "clsUpdateClientScreen.h"
 #include "clsFindClientScreen.h"
 #include "clsTransactionsScreen.h"
+#include "clsManageUsersScreen.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ class clsMainScreen :protected clsScreen
 
     static void _ManageUsersMenuScreen()
     {
-        cout << "\nManage Users Menu Screen Will be Here Soon...\n";
+        clsManageUsersScreen::ManageUsersMenuScreen();
     }
 
     static void _TransactionsMenuScreen()
@@ -130,9 +131,9 @@ class clsMainScreen :protected clsScreen
     static void MainMenuScreen()
     {
         system("cls");
-        _DrawScreenHeader("\t\tMain Screen");
+        _DrawScreenHeader("\t      Main Screen");
         cout << setw(37) << left << "" << "===========================================\n";
-        cout << setw(37) << left << "" << "\t\tMain Menu Screen\n";
+        cout << setw(37) << left << "" << "\t\t   Main Menu Screen\n";
         cout << setw(37) << left << "" << "===========================================\n";
         cout << setw(37) << left << "" << "\t[1] Show Clients List\n";
         cout << setw(37) << left << "" << "\t[2] Add New Clients\n";

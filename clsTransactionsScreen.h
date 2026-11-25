@@ -1,8 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <vector>
-#include <fstream>
+#include <iomanip>
 #include "clsScreen.h"
 #include "clsBankClient.h"
 #include "clsDepositScreen.h"
