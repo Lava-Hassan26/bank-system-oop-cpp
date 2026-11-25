@@ -5,6 +5,7 @@
 #include "clsScreen.h"
 #include "clsInputValidation.h"
 #include "clsListUsersScreen.h"
+#include "clsAddNewUserScreen.h"
 
 class clsManageUsersScreen : protected clsScreen
 {
@@ -28,7 +29,7 @@ private:
 
     static void _AddNewUsersScreen()
     {
-
+        clsAddNewUserScreen::AddNewUserScreen();
     }
 
     static void _DeleteUserScreen()

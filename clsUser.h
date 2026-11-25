@@ -124,6 +124,11 @@ private:
     }
 
 public:
+    enum enUserPermissions {
+        eAll = -1, pShowClientsList = 1, pAddClient = 2, pDeleteClient = 4,
+        pUpdateClientInfo = 8, pFindClient = 16, pTransactions = 32, pManageUsers = 64
+    };
+
     clsUser(enMode mode, string firstName, string lastName,
         string email, string phone, string username,
         string password, int userPermissions) :clsPerson(firstName, lastName, email, phone)
@@ -223,16 +228,6 @@ public:
         clsUser user = Find(username);
 
         return !user.IsEmpty();
-    }
-
-    void PrintUserCardDetails(const clsUser& user)
-    {
-        cout << "\nThe Following are the User Details";
-        cout << "\n***************************************";
-        cout << "\nUsername   : " << user._username;
-        cout << "\nPassword   : " << user._password;
-        cout << "\nPermissions: " << user._userPermissions;
-        cout << "\n***************************************\n\n";
     }
 
     enum enSaveResultsMode { svFailedEmptyObject, svSucceeded, svFailedUsernameExists };
