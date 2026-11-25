@@ -1,10 +1,10 @@
 #include <iostream>
-#include "clsMainScreen.h"
+#include "clsLoginScreen.h"
+
 using namespace std;
 
 int main()
 { 
-    clsMainScreen::MainMenuScreen();
-  
+    clsLoginScreen::LoginScreen();
     return 0;
 }
