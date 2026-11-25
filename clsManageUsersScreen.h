@@ -4,6 +4,7 @@
 #include <iomanip>
 #include "clsScreen.h"
 #include "clsInputValidation.h"
+#include "clsListUsersScreen.h"
 
 class clsManageUsersScreen : protected clsScreen
 {
@@ -22,7 +23,7 @@ private:
 
     static void _ShowUsersListScreen()
     {
-
+        clsListUsersScreen::ShowUsersListScreen();
     }
 
     static void _AddNewUsersScreen()

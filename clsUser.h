@@ -85,10 +85,10 @@ private:
 
         if (usersFile.is_open())
         {
-            string currentLline = "";
-            while (getline(usersFile, currentLline))
+            string currentline = "";
+            while (getline(usersFile, currentline))
             {
-                clsUser user = _ConvertDataLineToUserRecord(currentLline, delim);
+                clsUser user = _ConvertDataLineToUserRecord(currentline, delim);
                 if (!user.IsEmpty())
                     vUsers.push_back(user);
             }
