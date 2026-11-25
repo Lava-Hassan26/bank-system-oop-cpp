@@ -5,6 +5,8 @@ using namespace std;
 
 int main()
 { 
-    clsLoginScreen::LoginScreen();
+    while (true)
+        clsLoginScreen::LoginScreen();
+
     return 0;
 }
