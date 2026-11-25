@@ -11,7 +11,6 @@ using namespace std;
 class clsBankClient : public clsPerson
 {
 private:
-
 	enum enMode { EmptyMode, UpdateMode, AddNewMode };
 
 	enMode _mode;
@@ -131,8 +130,8 @@ private:
 		}
 		_SaveAllClientsToFile(_vClients, "Clients.txt");
 	}
-public:
 
+public:
 	clsBankClient(enMode mode, string firstName, string lastName,
 		string email, string phone, string accountNumber, string pinCode,
 		double balance) :clsPerson(firstName, lastName, email, phone)
