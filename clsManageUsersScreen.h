@@ -8,6 +8,7 @@
 #include "clsAddNewUserScreen.h"
 #include "clsDeleteUserScreen.h"
 #include "clsUpdateUserScreen.h"
+#include "clsFindUserScreen.h"
 
 class clsManageUsersScreen : protected clsScreen
 {
@@ -46,7 +47,7 @@ private:
 
     static void _FindUserScreen()
     {
-
+        clsFindUserScreen::FindUserScreen();
     }
 
     static void _GoBackToManageUsersMenu()
