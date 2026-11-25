@@ -10,16 +10,19 @@
 #include "clsFindClientScreen.h"
 #include "clsTransactionsScreen.h"
 #include "clsManageUsersScreen.h"
+#include "clsUser.h"
+#include "Global.h"
 
 using namespace std;
 
 class clsMainScreen :protected clsScreen
 {
-	enum enMainMenu { ShowClientsList = 1, AddClient, ShowDeleteClientScreen, UpdateClientInfo, FindClient, Transactions, ManageUsers, Logout };
+private:
+	enum enMainMenu { ClientsList = 1, AddClient, DeleteClient, UpdateClient, FindClient, Transactions, ManageUsers, Logout };
 
-    static void _Login()
+    static void _Logout()
     {
-        cout << "\nLogin Screen Will be Here Soon...\n";
+        currentUser = clsUser::Find("", "");
     }
 
     static void _ManageUsersMenuScreen()
@@ -59,6 +62,7 @@ class clsMainScreen :protected clsScreen
 
     static void _GoBackToMainMenu()
     {
+        system("cls");
         cout << setw(37) << left << "" << "Press any key to go back to main menu . . . ";
         system("pause>0");
         MainMenuScreen();
@@ -68,7 +72,7 @@ class clsMainScreen :protected clsScreen
     {
         switch (userChoice)
         {
-        case enMainMenu::ShowClientsList:
+        case enMainMenu::ClientsList:
             system("cls");
             _ShowClientsListScreen();
             _GoBackToMainMenu();
@@ -80,13 +84,13 @@ class clsMainScreen :protected clsScreen
             _GoBackToMainMenu();
             break;
 
-        case enMainMenu::ShowDeleteClientScreen:
+        case enMainMenu::DeleteClient:
             system("cls");
             _DeleteClientScreen();
             _GoBackToMainMenu();
             break;
 
-        case enMainMenu::UpdateClientInfo:
+        case enMainMenu::UpdateClient:
             system("cls");
             _UpdateClientScreen();
             _GoBackToMainMenu();
@@ -112,7 +116,7 @@ class clsMainScreen :protected clsScreen
 
         case enMainMenu::Logout:
             system("cls");
-           // _Login();
+           _Logout();
             break;
         }
     }
