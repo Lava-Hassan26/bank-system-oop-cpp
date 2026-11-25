@@ -28,6 +28,8 @@ private:
 public:
     static void DeleteClientScreen()
     {
+        if (!clsScreen::CheckAccessRights(clsUser::pDeleteClient))
+            return;
         _DrawScreenHeader("\tDelete Client Screen");
 
         string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");

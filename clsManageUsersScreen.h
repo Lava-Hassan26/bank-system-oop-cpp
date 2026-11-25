@@ -100,6 +100,8 @@ private:
 public:
     static void ManageUsersMenuScreen()
     {
+        if (!clsScreen::CheckAccessRights(clsUser::pManageUsers))
+            return;
         _DrawScreenHeader("\t Manage Users Screen");
 
         cout << setw(37) << left << "" << "===========================================\n";

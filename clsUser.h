@@ -283,16 +283,6 @@ public:
         return _LoadAllUsersFromFile("Users.txt");
     }
 
-    void DeniedScreen()
-    {
-        system("cls");
-        cout << "\n===========================================\n";
-        cout << "Access Denied!\n";
-        cout << "You Do Not Have Permission To Do This Action!\n";
-        cout << "Contact Your Admin For Help\n";
-        cout << "\n===========================================\n";
-    }
-
     bool CheckAccessPermission(enUserPermissions permission)
     {
         if (this->_userPermissions == enUserPermissions::eAll)

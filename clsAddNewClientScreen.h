@@ -39,6 +39,9 @@ private:
 public:
     static void AddNewClientScreen()
     {
+        if (!clsScreen::CheckAccessRights(clsUser::pAddClient))
+            return;
+
         _DrawScreenHeader("\tAdd New Client Screen");
         string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
         while (clsBankClient::IsClientExists(accountNumber))
@@ -54,7 +57,6 @@ public:
         cout << "\n____________________\n";
 
         clsBankClient::enSaveResultsMode saveResultsMode = newClient.Save();
-
         switch (saveResultsMode)
         {
         case  clsBankClient::enSaveResultsMode::svSucceeded:

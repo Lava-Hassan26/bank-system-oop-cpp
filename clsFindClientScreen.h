@@ -28,6 +28,8 @@ private:
 public:
     static void FindClientScreen()
     {
+        if (!clsScreen::CheckAccessRights(clsUser::pFindClient))
+            return;
         _DrawScreenHeader("\tFind Client Screen");
         string accountNumber = clsInputValidation::ReadString("\nEnter account number: ");
 

@@ -21,7 +21,6 @@ protected:
 
     static bool CheckAccessRights(clsUser::enUserPermissions permission)
     {
-
         if (!currentUser.CheckAccessPermission(permission))
         {
             cout << "\t\t\t\t\t______________________________________";

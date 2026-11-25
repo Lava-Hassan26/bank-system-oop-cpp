@@ -79,6 +79,8 @@ private:
 public:
     static void TransactionsMenuScreen()
     {
+        if (!CheckAccessRights(clsUser::pTransactions))
+            return;
         _DrawScreenHeader("\t  Transactions Screen");
 
         cout << setw(37) << left << "" << "===========================================\n";

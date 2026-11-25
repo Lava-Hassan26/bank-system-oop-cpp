@@ -62,7 +62,6 @@ private:
 
     static void _GoBackToMainMenu()
     {
-        system("cls");
         cout << setw(37) << left << "" << "Press any key to go back to main menu . . . ";
         system("pause>0");
         MainMenuScreen();
