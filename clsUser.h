@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+
 #include "clsPerson.h"
 #include "clsString.h"
 #include "clsDate.h"
@@ -18,6 +19,8 @@ private:
     string _password = "";
     int _userPermissions = 0;
     bool _isMarkedForDelete = false;
+
+    struct stLoginRegisterRecord;
 
     static string _ConvertUserRecordToDataLine(clsUser user, string delim = "#//#")
     {
@@ -136,6 +139,26 @@ private:
         return loginRecord;
     }
 
+    static stLoginRegisterRecord _ConvertLoginRegisterLineToRecord(string dataLine, string delim = "#//#")
+    {
+        stLoginRegisterRecord loginRegisterRecord;
+
+        if (dataLine.empty())
+            return loginRegisterRecord;
+
+        vector<string> vLoginRegister = clsString::SplitString(dataLine, delim);
+
+        if (vLoginRegister.size() == 0)
+            return loginRegisterRecord;
+
+        loginRegisterRecord.dateTime = vLoginRegister[0];
+        loginRegisterRecord.username = vLoginRegister[1];
+        loginRegisterRecord.password = vLoginRegister[2];
+        loginRegisterRecord.permissions = stoi(vLoginRegister[3]);
+
+        return loginRegisterRecord;
+    }
+
 public:
     enum enUserPermissions {
         eAll = -1, pShowClientsList = 1, pAddClient = 2, pDeleteClient = 4,
@@ -151,6 +174,14 @@ public:
         _password = password;
         _userPermissions = userPermissions;
     }
+
+    struct stLoginRegisterRecord
+    {
+        string dateTime = "";
+        string username = "";
+        string password = "";
+        int permissions = 0;
+    };
 
     bool IsEmpty()
     {
@@ -318,5 +349,30 @@ public:
             loginRegisterFile << loginDataLine << endl;
             loginRegisterFile.close();
         }
+    }
+
+    static vector <stLoginRegisterRecord> GetLoginRegisterRecord()
+    {
+        vector <stLoginRegisterRecord> vLoginRegister;
+        fstream loginRegisterFile;
+
+        loginRegisterFile.open("LoginRegister.txt", ios::in);
+
+        if (loginRegisterFile.is_open())
+        {               
+            stLoginRegisterRecord loginRegRecord;
+            string dataLine = "";
+
+            while (getline(loginRegisterFile, dataLine))
+            {
+                if (dataLine != "")
+                {
+                    loginRegRecord = _ConvertLoginRegisterLineToRecord(dataLine);
+                    vLoginRegister.push_back(loginRegRecord);
+                }
+            }
+            loginRegisterFile.close();
+        }
+        return vLoginRegister;
     }
 };
