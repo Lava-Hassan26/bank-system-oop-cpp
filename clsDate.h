@@ -154,6 +154,22 @@ public:
 		return clsDate(day, month, year);
 	}
 
+	static clsDate GetStringSystemDateTime()
+	{
+		time_t t = time(0);
+		tm* now = localtime(&t);
+
+		short year = now->tm_year + 1900;
+		short month = now->tm_mon + 1;
+		short day = now->tm_mday;
+		short hour = now->tm_hour;
+		short minutes = now->tm_min;
+		short seconds = now->tm_sec;
+
+		return to_string(day) + "/" + to_string(month) + "/" + to_string(year) +
+			" - " + to_string(hour) + ":" + to_string(minutes) + ":" + to_string(seconds);
+	}
+
 	static clsDate StringToDate(string strDate)
 	{
 		vector <string> vDate = clsString::SplitString(strDate, "/");
