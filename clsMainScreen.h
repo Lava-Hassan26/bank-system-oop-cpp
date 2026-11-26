@@ -10,6 +10,7 @@
 #include "clsFindClientScreen.h"
 #include "clsTransactionsScreen.h"
 #include "clsManageUsersScreen.h"
+#include "clsLoginRegisterScreen.h"
 #include "clsUser.h"
 #include "Global.h"
 
@@ -18,7 +19,12 @@ using namespace std;
 class clsMainScreen :protected clsScreen
 {
 private:
-	enum enMainMenu { ClientsList = 1, AddClient, DeleteClient, UpdateClient, FindClient, Transactions, ManageUsers, Logout };
+	enum enMainMenu { ClientsList = 1, AddClient, DeleteClient, UpdateClient, FindClient, Transactions, ManageUsers,LoginRegister, Logout };
+
+    static void _LoginRegister()
+    {
+        clsLoginRegisterScreen::ShowLoginRegistersListScreen();
+    }
 
     static void _Logout()
     {
@@ -113,6 +119,12 @@ private:
             _GoBackToMainMenu();
             break;
 
+        case enMainMenu::LoginRegister:
+            system("cls");
+            _LoginRegister();
+            _GoBackToMainMenu();
+            break;
+
         case enMainMenu::Logout:
             system("cls");
            _Logout();
@@ -124,8 +136,8 @@ private:
     {
         short userChoice = 0;
 
-        cout << setw(37) << left << "" << "Enter your choice [1-8]: ";
-        userChoice = clsInputValidation::ReadNumberBetween(1, 8);
+        cout << setw(37) << left << "" << "Enter your choice [1-9]: ";
+        userChoice = clsInputValidation::ReadNumberBetween(1, 9);
 
         return (enMainMenu)userChoice;
     }
@@ -145,7 +157,8 @@ private:
         cout << setw(37) << left << "" << "\t[5] Find Client\n";
         cout << setw(37) << left << "" << "\t[6] Transactions\n";
         cout << setw(37) << left << "" << "\t[7] Manage Users\n";
-        cout << setw(37) << left << "" << "\t[8] Logout\n";
+        cout << setw(37) << left << "" << "\t[8] Login Register\n";
+        cout << setw(37) << left << "" << "\t[9] Logout\n";
         cout << setw(37) << left << "" << "===========================================\n";
         _ExecuteMainMenu(_ReadMainMenuUserChoice());
     }
