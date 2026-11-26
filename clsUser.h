@@ -162,7 +162,7 @@ private:
 public:
     enum enUserPermissions {
         eAll = -1, pShowClientsList = 1, pAddClient = 2, pDeleteClient = 4,
-        pUpdateClientInfo = 8, pFindClient = 16, pTransactions = 32, pManageUsers = 64
+        pUpdateClientInfo = 8, pFindClient = 16, pTransactions = 32, pManageUsers = 64, pShowLoginRegister = 128
     };
 
     clsUser(enMode mode, string firstName, string lastName,
