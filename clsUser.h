@@ -5,6 +5,7 @@
 #include <vector>
 #include "clsPerson.h"
 #include "clsString.h"
+#include "clsDate.h"
 #include "clsInputValidation.h"
 
 class clsUser : public clsPerson
@@ -63,13 +64,13 @@ private:
 
         if (usersFile.is_open())
         {
-            string currentLline = "";
+            string currentline = "";
             for (clsUser& user : vUsers)
             {
                 if (!user._isMarkedForDelete)
                 {
-                    currentLline = _ConvertUserRecordToDataLine(user, delim);
-                    usersFile << currentLline << endl;
+                    currentline = _ConvertUserRecordToDataLine(user, delim);
+                    usersFile << currentline << endl;
                 }
             }
             usersFile.close();
@@ -121,6 +122,18 @@ private:
         }
 
         _SaveAllUsersToFile(_vUsers, "Users.txt");
+    }
+
+    string _PrepareLoginRecord(string delim = "#//#")
+    {
+        string loginRecord = "";
+
+        loginRecord += clsDate::GetStringSystemDateTime() + delim;
+        loginRecord += GetUserName() + delim;
+        loginRecord += GetPassword() + delim;
+        loginRecord += to_string(GetPermissions());
+
+        return loginRecord;
     }
 
 public:
@@ -291,5 +304,19 @@ public:
             return true;
         else
             return false;
+    }
+
+    void LoginRegister()
+    {
+        string loginDataLine = _PrepareLoginRecord();
+
+        fstream loginRegisterFile;
+        loginRegisterFile.open("LoginRegister.txt", ios::out | ios::app);
+
+        if (loginRegisterFile.is_open())
+        {
+            loginRegisterFile << loginDataLine << endl;
+            loginRegisterFile.close();
+        }
     }
 };

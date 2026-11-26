@@ -154,7 +154,7 @@ public:
 		return clsDate(day, month, year);
 	}
 
-	static clsDate GetStringSystemDateTime()
+	static string GetStringSystemDateTime()
 	{
 		time_t t = time(0);
 		tm* now = localtime(&t);

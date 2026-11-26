@@ -4,9 +4,12 @@
 using namespace std;
 
 int main()
-{ 
+{
     while (true)
-        clsLoginScreen::LoginScreen();
+    {
+        if (!clsLoginScreen::LoginScreen())
+            break;
+    }
 
     return 0;
 }
