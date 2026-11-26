@@ -84,7 +84,7 @@ public:
         _DrawScreenHeader("\t  Transactions Screen");
 
         cout << setw(37) << left << "" << "===========================================\n";
-        cout << setw(37) << left << "" << "\tTransactions Menu Screen\n";
+        cout << setw(37) << left << "" << "\t      Transactions Menu Screen\n";
         cout << setw(37) << left << "" << "===========================================\n";
         cout << setw(37) << left << "" << "\t[1] Deposit\n";
         cout << setw(37) << left << "" << "\t[2] Withdraw\n";
