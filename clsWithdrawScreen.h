@@ -47,8 +47,15 @@ public:
         clsBankClient client = clsBankClient::Find(accountNumber);
         _PrintClientCard(client);
 
-        cout << "\nEnter Withdraw Amount: ";
-        double depositAmount = clsInputValidation::ReadDoubleNumber();
+        double withdrawAmount = 0;
+        do 
+        {
+            if (withdrawAmount > client.GetBalance())
+                cout << "\nThe Amount Exceeds the Balance!\n";
+
+            cout << "\nEnter Withdraw Amount: ";
+            withdrawAmount = clsInputValidation::ReadDoubleNumber();
+        } while (withdrawAmount > client.GetBalance());
 
         char userChoice = 'y';
         cout << "Are you sure you want to withdraw this amount? [y/n]? ";
@@ -56,7 +63,7 @@ public:
 
         if (tolower(userChoice) == 'y')
         {
-            client.Withdraw(depositAmount);
+            client.Withdraw(withdrawAmount);
             cout << "\nWithdraw Done successfully!\n\n";
         }
         else

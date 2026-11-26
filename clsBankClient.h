@@ -309,11 +309,22 @@ public:
 	{
 		if (amount > _balance)
 			return false;
+
 		else
 		{
 			_balance -= amount;
 			Save();
 			return true;
 		}
+	}
+
+	bool Transfer(double amount, clsBankClient& destinationClient)
+	{
+		if (amount > _balance)
+			return false;
+
+		Withdraw(amount);
+		destinationClient.Deposite(amount);
+		return true;
 	}
 };

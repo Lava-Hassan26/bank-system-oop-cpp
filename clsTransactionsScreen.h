@@ -6,18 +6,20 @@
 #include "clsBankClient.h"
 #include "clsDepositScreen.h"
 #include "clsWithdrawScreen.h"
-#include "clsTotalBalancesScreen.h"
+#include "clsTransferScreen.h"
 #include "clsInputValidation.h"
+#include "clsTotalBalancesScreen.h"
+
 
 class clsTransactionsScreen : protected clsScreen
 {
 private:
-    enum enTransactionsMenu { Deposit = 1, Withdraw, TotalBalances, MainMenu };
+    enum enTransactionsMenu { Deposit = 1, Withdraw, TotalBalances, Transfer, MainMenu };
 
     static enTransactionsMenu _ReadTransactionsMenuUserChoice()
     {
-        cout << setw(37) << left << "" << "Enter your choice [1-4]: ";
-        short userChoice = clsInputValidation::ReadNumberBetween(1, 4);
+        cout << setw(37) << left << "" << "Enter your choice [1-5]: ";
+        short userChoice = clsInputValidation::ReadNumberBetween(1, 5);
         return (enTransactionsMenu)userChoice;
     }
 
@@ -44,6 +46,11 @@ private:
         clsWithdrawScreen::WithdrawScreen();
     }
 
+    static void _TransferScreen()
+    {
+        clsTransferScreen::TransferScreen();
+    }
+
     static void _ExecuteTransactionsMenu(enTransactionsMenu userChoice)
     {
         switch (userChoice)
@@ -63,6 +70,12 @@ private:
         case enTransactionsMenu::TotalBalances:
             system("cls");
             _TotalBalancesListScreen();
+            _GoBackToTransactionsMenu();
+            break;
+
+            case enTransactionsMenu::Transfer:
+            system("cls");
+            _TransferScreen();
             _GoBackToTransactionsMenu();
             break;
 
@@ -89,7 +102,8 @@ public:
         cout << setw(37) << left << "" << "\t[1] Deposit\n";
         cout << setw(37) << left << "" << "\t[2] Withdraw\n";
         cout << setw(37) << left << "" << "\t[3] Total Balances\n";
-        cout << setw(37) << left << "" << "\t[4] Main Menu\n";
+        cout << setw(37) << left << "" << "\t[4] Transfer\n";
+        cout << setw(37) << left << "" << "\t[5] Main Menu\n";
         cout << setw(37) << left << "" << "===========================================\n";
         _ExecuteTransactionsMenu(_ReadTransactionsMenuUserChoice());
     }
