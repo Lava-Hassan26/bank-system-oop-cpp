@@ -33,7 +33,7 @@ private:
 
     static void _TotalBalancesListScreen()
     {
-        clsTotalBalancesScreen::TotalBalancesList();
+        clsTotalBalancesScreen::TotalBalancesListScreen();
     }
 
     static void _DepositScreen()

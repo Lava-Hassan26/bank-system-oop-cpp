@@ -8,7 +8,7 @@
 class clsTotalBalancesScreen : protected clsScreen
 {
 public:
-    static void TotalBalancesList()
+    static void TotalBalancesListScreen()
     {
         vector<clsBankClient> vClients = clsBankClient::GetClientsList();
 

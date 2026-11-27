@@ -5,6 +5,8 @@
 #include <fstream>
 #include "clsPerson.h"
 #include "clsString.h"
+#include "Global.h"
+#include "clsDate.h"
 
 using namespace std;
 
@@ -129,6 +131,35 @@ private:
 			}
 		}
 		_SaveAllClientsToFile(_vClients, "Clients.txt");
+	}
+
+	string _PrepareTransferRecord(double amount, clsBankClient& destinationClient, string delim = "#//#")
+	{
+		string transferRecord = "";
+
+		transferRecord += clsDate::GetStringSystemDateTime() + delim;
+		transferRecord += GetAccountNumber() + delim;
+		transferRecord += destinationClient.GetAccountNumber() + delim;
+		transferRecord += to_string(amount) + delim;
+		transferRecord += to_string(GetBalance()) + delim;
+		transferRecord += to_string(destinationClient.GetBalance()) + delim;
+		transferRecord += currentUser.GetUserName();
+
+		return transferRecord;
+	}
+
+	void _TransferRegister(double amount, clsBankClient& destinationClient)
+	{
+		string transferRegister = _PrepareTransferRecord(amount, destinationClient);
+
+		fstream transferRegisterFile;
+		transferRegisterFile.open("TransferRegister.txt", ios::out | ios::app);
+
+		if (transferRegisterFile.is_open())
+		{
+			transferRegisterFile << transferRegister << endl;
+			transferRegisterFile.close();
+		}
 	}
 
 public:
@@ -325,6 +356,7 @@ public:
 
 		Withdraw(amount);
 		destinationClient.Deposite(amount);
+		_TransferRegister(amount, destinationClient);
 		return true;
 	}
 };
