@@ -21,6 +21,8 @@ private:
 	double _balance = 0.0;
 	bool _isMarkedForDelete = false;
 
+	struct stTransferRegister;
+
 	static clsBankClient _ConvertDataLineToClientObject(string dataLine, string delim = "#//#")
 	{
 		if (dataLine.empty())
@@ -162,6 +164,29 @@ private:
 		}
 	}
 
+	static stTransferRegister _ConvertTransferRegisterLineToRecord(string dataLine, string delim = "#//#")
+	{
+		stTransferRegister transferRegisterRecord;
+
+		if (dataLine.empty())
+			return transferRegisterRecord;
+
+		vector<string> vTransferRecord = clsString::SplitString(dataLine, delim);
+
+		if (vTransferRecord.size() == 0)
+			return transferRegisterRecord;
+
+		transferRegisterRecord.dateTime = vTransferRecord[0];
+		transferRegisterRecord.sourceAccountNo = vTransferRecord[1];
+		transferRegisterRecord.destinationAccountNo = vTransferRecord[2];
+		transferRegisterRecord.amount = stod(vTransferRecord[3]);
+		transferRegisterRecord.sourceBalance = stod(vTransferRecord[4]);
+		transferRegisterRecord.destinationBalance = stod(vTransferRecord[5]);
+		transferRegisterRecord.username = vTransferRecord[6];
+
+		return transferRegisterRecord;
+	}
+
 public:
 	clsBankClient(enMode mode, string firstName, string lastName,
 		string email, string phone, string accountNumber, string pinCode,
@@ -172,6 +197,17 @@ public:
 		_pinCode = pinCode;
 		_balance = balance;
 	}
+
+	struct stTransferRegister
+	{
+		string dateTime = "";
+		string sourceAccountNo = "";
+		string destinationAccountNo = "";
+		double amount = 0;
+		double sourceBalance = 0;
+		double destinationBalance = 0;
+		string username = "";
+	};
 
 	string GetAccountNumber()
 	{
@@ -351,12 +387,37 @@ public:
 
 	bool Transfer(double amount, clsBankClient& destinationClient)
 	{
-		if (amount > _balance)
+		if (amount <= 0 || amount > _balance || destinationClient.IsEmpty() || destinationClient.GetAccountNumber() == _accountNumber)
 			return false;
 
 		Withdraw(amount);
 		destinationClient.Deposite(amount);
 		_TransferRegister(amount, destinationClient);
 		return true;
+	}
+
+	static vector <stTransferRegister> GetTransferRegisterRecord()
+	{
+		vector <stTransferRegister> vTransferRegister;
+		fstream transferRegisterFile;
+
+		transferRegisterFile.open("TransferRegister.txt", ios::in);
+
+		if (transferRegisterFile.is_open())
+		{
+			stTransferRegister transferRegisterRecord;
+			string dataLine = "";
+
+			while (getline(transferRegisterFile, dataLine))
+			{
+				if (dataLine != "")
+				{
+					transferRegisterRecord = _ConvertTransferRegisterLineToRecord(dataLine);
+					vTransferRegister.push_back(transferRegisterRecord);
+				}
+			}
+			transferRegisterFile.close();
+		}
+		return vTransferRegister;
 	}
 };
