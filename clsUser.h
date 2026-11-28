@@ -3,10 +3,10 @@
 #include <string>
 #include <fstream>
 #include <vector>
-
 #include "clsPerson.h"
 #include "clsString.h"
 #include "clsDate.h"
+#include "clsUtil.h"
 #include "clsInputValidation.h"
 
 class clsUser : public clsPerson
@@ -30,7 +30,7 @@ private:
         userDataLine += user.GetEmail() + delim;
         userDataLine += user.GetPhone() + delim;
         userDataLine += user._username + delim;
-        userDataLine += user._password + delim;
+        userDataLine += clsUtil::EncryptText(user._password, 2) + delim;
         userDataLine += to_string(user._userPermissions);
         return userDataLine;
     }
@@ -45,7 +45,8 @@ private:
         if (vUser.size() < 7)
             return _GetEmptyUserObject();
 
-        return clsUser(enMode::UpdateMode, vUser[0], vUser[1], vUser[2], vUser[3], vUser[4], vUser[5], stoi(vUser[6]));
+        return clsUser(enMode::UpdateMode, vUser[0], vUser[1], vUser[2], vUser[3], vUser[4],
+            clsUtil::DecryptText(vUser[5], 2), stoi(vUser[6]));
     }
 
     static void _AddUserToFile(clsUser user, string fileName, string delim = "#//#")
@@ -133,7 +134,7 @@ private:
 
         loginRecord += clsDate::GetStringSystemDateTime() + delim;
         loginRecord += GetUserName() + delim;
-        loginRecord += GetPassword() + delim;
+        loginRecord += clsUtil::EncryptText(GetPassword(), 2) + delim;
         loginRecord += to_string(GetPermissions());
 
         return loginRecord;
@@ -153,7 +154,7 @@ private:
 
         loginRegisterRecord.dateTime = vLoginRegister[0];
         loginRegisterRecord.username = vLoginRegister[1];
-        loginRegisterRecord.password = vLoginRegister[2];
+        loginRegisterRecord.password = clsUtil::DecryptText(vLoginRegister[2],2);
         loginRegisterRecord.permissions = stoi(vLoginRegister[3]);
 
         return loginRegisterRecord;
@@ -342,6 +343,7 @@ public:
         string loginDataLine = _PrepareLoginRecord();
 
         fstream loginRegisterFile;
+
         loginRegisterFile.open("LoginRegister.txt", ios::out | ios::app);
 
         if (loginRegisterFile.is_open())

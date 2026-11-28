@@ -418,6 +418,7 @@ public:
 			}
 			transferRegisterFile.close();
 		}
+
 		return vTransferRegister;
 	}
 };
